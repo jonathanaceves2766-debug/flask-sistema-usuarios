@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Lista de Usuarios{% endblock %}
+{% block content %}
+<h1 class="title">Lista de Usuarios Registrados</h1>
+<table class="table is-fullwidth is-striped is-hoverable">
+<thead><tr><th>ID</th><th>Nombre de Usuario</th><th>Correo Electrónico</th><th>Acciones</th></tr></thead>
+<tbody>
+{% for user in users %}
+<tr>
+<td>{{ user.id }}</td>
+<td><strong>{{ user.username|capitalize }}</strong></td>
+<td>{{ user.email }}</td>
+<td>
+<a href="{{ url_for('user.profile', id=user.id) }}" class="button is-small is-info">Ver Perfil</a>
+{% if session.get('user_id') == user.id %}
+<a href="{{ url_for('user.edit_profile', id=user.id) }}" class="button is-small is-warning">Editar</a>
+<form action="{{ url_for('user.delete_user', id=user.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar usuario?');">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+<button type="submit" class="button is-small is-danger">Eliminar</button>
+</form>
+{% endif %}
+</td>
+</tr>
+{% else %}
+<tr><td colspan="4" class="has-text-centered">No hay usuarios registrados aún.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}
