@@ -1,19 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Perfil{% endblock %}
+
 {% block content %}
-<div class="columns is-centered"><div class="column is-half">
-<div class="card">
-<div class="card-content">
-<p class="title">{{ user.username|capitalize }}</p>
-<p class="subtitle">ID: #{{ user.id }}</p>
-<p><strong>Correo:</strong> {{ user.email }}</p>
+<div class="box">
+    <h1 class="title">Hola, {{ username }} 👋</h1>
+    <p>Has accedido correctamente a una ruta protegida con <code>@login_required</code>.</p>
 </div>
-<footer class="card-footer">
-<a href="{{ url_for('user.user_list') }}" class="card-footer-item">Volver a la lista</a>
-{% if session.get('user_id') == user.id %}
-<a href="{{ url_for('user.edit_profile', id=user.id) }}" class="card-footer-item has-text-warning-dark">Editar perfil</a>
-{% endif %}
-</footer>
-</div>
-</div></div>
 {% endblock %}
